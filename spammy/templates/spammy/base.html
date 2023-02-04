@@ -1,0 +1,63 @@
+{% load static %}
+
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <title>black_pink_white</title>
+  <meta name="description" content="website description" />
+  <meta name="keywords" content="website keywords, website keywords" />
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+  <link href='{% static 'css/style.css' %}' rel="stylesheet">
+  <style>
+.myButton {
+	box-shadow:inset 0px 1px 0px 0px #f8ece4;
+	background:linear-gradient(to bottom, #f8ece4 5%, #f8ece4 100%);
+	background-color:#f8ece4;
+	display:inline-block;
+	cursor:pointer;
+	color:#f8ece4;
+	font-family:Arial;
+	font-size:15px;
+	font-weight:bold;
+	padding:6px 24px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #666666;
+}
+.myButton:hover {
+	background:linear-gradient(to bottom, #f8ece4 5%, #f8ece4 100%);
+	background-color:#f8ece4;
+}
+.myButton:active {
+	position:relative;
+	top:1px;
+
+}
+.GeeksForGeeks {
+	maxwidth=500px;
+}
+  </style>
+
+
+</head>
+
+<body>
+  <div id="main">
+    <div id="header">
+      <div id="logo">
+        <div id="logo_text">
+          <!-- class="logo_colour", allows you to change the colour of the text -->
+          <h1><a href="#">black<span class="logo_colour">_pink</span><span class="logo_colour2">_white</span></a></h1>
+          <h2>Лучше быть последним — первым, чем первым — последним.</h2>
+        </div>
+      </div>
+
+    {% block content %}
+    {% endblock %}
+
+    <div id="footer">
+      Copyright &copy; black_pink_white | <a href="#">HTML5</a> | <a href="#">CSS</a> | from <a href="#">free HTML5 templates</a>
+    </div>
+  </div>
+</body>
+</html>

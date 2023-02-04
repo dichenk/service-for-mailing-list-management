@@ -1,0 +1,35 @@
+{% extends 'spammy/base.html' %}
+{% load static %}
+
+{% block content %}
+      <div id="menubar">
+        <ul id="menu">
+          <!-- put class="selected" in the li tag for the selected page - to highlight which page you're on -->
+          <li><a href="index.html">Home</a></li>
+          <li><a href="{% url 'spammy:client'%}">Clients</a></li>
+          <li class="selected"><a href="{% url 'spammy:newsletter'%}">Maillist</a></li>
+          <li><a href="{% url 'spammy:mails'%}">Mails</a></li>
+          <li><a href="{% url 'spammy:maillistlog'%}">Maillist log</a></li>
+        </ul>
+      </div>
+    </div>
+    <div id="site_content">
+	
+	
+               <form method="post">
+			             <div class="form_settings">
+
+                   {% csrf_token %}
+				   
+                   {{ form.as_ul }}
+	
+                   <button class="btn btn-primary" type="submit">
+                       сохранить
+                   </button>
+				   </div>
+               </form>
+    
+
+	
+	</div>
+{% endblock %}

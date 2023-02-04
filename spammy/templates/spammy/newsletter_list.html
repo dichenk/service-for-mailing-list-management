@@ -1,0 +1,58 @@
+{% extends 'spammy/base.html' %}
+{% load static %}
+
+{% block content %}
+      <div id="menubar">
+        <ul id="menu">
+          <!-- put class="selected" in the li tag for the selected page - to highlight which page you're on -->
+          <li><a href="index.html">Home</a></li>
+          <li><a href="{% url 'spammy:client'%}">Clients</a></li>
+          <li class="selected"><a href="{% url 'spammy:newsletter'%}">Maillist</a></li>
+          <li><a href="{% url 'spammy:mails'%}">Mails</a></li>
+          <li><a href="{% url 'spammy:maillistlog'%}">Maillist log</a></li>
+        </ul>
+      </div>
+    </div>
+    <div id="site_content">
+      <table class="table">
+        <thead>
+        <tr>
+          <th scope="col">Клиент</th>
+          <th scope="col">Время</th>
+          <th scope="col">Частота</th>
+          <th scope="col">Статус</th>
+		  <th scope="col">Действия</th>
+
+        </tr>
+        </thead>
+        <tbody>
+		     <a href="{% url 'spammy:create_newsletter' %}">Add new newsletter</a>
+
+        {% for object in object_list %}
+
+        <tr>
+          <td>{{object.client}}</td>
+          <td>{{object.posting_time}}</td>
+          <td>{{object.frequency}}</td>
+		  <td>
+		  {{object.mailing_status}}
+		  {%  if object.mailing_status == 'created' %}
+			<a href='{% url 'spammy:status' object.pk %}'> - start mailinglist</a>
+		  {% else %}
+			<a href='{% url 'spammy:status' object.pk %}'> - stop mailinglist</a>
+			{% endif %}
+		  </td>
+          <td>
+		  <a>Подробнее</a> - 
+		  <a href='{% url 'spammy:update_newsletter' object.pk %}'>Редактировать</a> - 
+		  <a>Удалить</a>
+		  </td>
+
+        </tr>
+
+        {% endfor %}
+        </tbody>
+      </table>
+     <a href="{% url 'spammy:create_newsletter' %}">Add new newsletter</a>
+    </div>
+ {% endblock %}

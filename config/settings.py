@@ -38,9 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'spammy',
-    'django_crontab',
-    'django_cron',
+    'django_apscheduler',
 ]
 
 MIDDLEWARE = [
@@ -141,11 +139,3 @@ EMAIL_HOST_USER = 'fuckup@oscarbot.ru'
 EMAIL_HOST_PASSWORD = 'AsTSNVv7pun9'
 EMAIL_USE_SSL = True
 
-CRON_CLASSES = [
-    "my_app.cron.MyCronJob",
-    # ...
-]
-
-CRONJOBS = [
-    ('* * * * *', 'myapp.cron.my_cron_job')
-]

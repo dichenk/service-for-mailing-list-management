@@ -73,8 +73,9 @@ def change_status(request, pk):
         maillist_item.mailing_status = 'created'
     maillist_item.save()
     check_myself()
-#    send_a_message()
+    #    send_a_message()
     return redirect(reverse_lazy('spammy:newsletter'))
+
 
 def check_myself():
     print('hello')
@@ -94,9 +95,10 @@ def check_myself():
         tm = (tm.hour * 60 + tm.minute) * 60 + tm.second
         tm_now = time.gmtime()
         print(tm_now)
-        tm_now = (tm_now.tm_hour * 60 + tm_now.tm_min) *60 + tm_now.tm_sec
+        tm_now = (tm_now.tm_hour * 60 + tm_now.tm_min) * 60 + tm_now.tm_sec
         if tm - tm_now < 0:
             print('самое время')
+
 
 def send_a_message():
     send_mail(
@@ -105,3 +107,5 @@ def send_a_message():
         from_email=settings.EMAIL_HOST_USER,
         recipient_list=['ju2ll@ya.ru'],
     )
+
+

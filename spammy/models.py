@@ -13,7 +13,7 @@ class Client(models.Model):
         default=None,
         blank=False
     )
-    comment = models.TextField(verbose_name='Комментарий', default=None)
+    comment = models.TextField(verbose_name='Комментарий', default='Type here')
 
     class Meta:
         verbose_name = 'Клиент'
@@ -32,20 +32,24 @@ class Newsletter(models.Model):
     STATUSES = (
         ('completed,', 'завершена'),
         ('created', 'создана'),
-        ('launched,', 'запущена')
+        ('launched,', 'запущена'),
     )
-    client = models.ForeignKey(
+
+    client = models.ManyToManyField(
         Client,
-        max_length=100,
-        verbose_name='Клиент',
-        on_delete=models.CASCADE,
-        null=True
+        verbose_name='Адресат',
+    )
+    posting_date = models.DateField(
+        auto_now=False,
+        auto_now_add=False,
+        verbose_name='Когда',
+        default='2023-12-29'
     )
     posting_time = models.TimeField(
         auto_now=False,
         auto_now_add=False,
-        verbose_name='Время рассылки',
-        blank=True
+        verbose_name='Во сколько',
+        default='00:01'
     )
     frequency = models.CharField(choices=FREQUENCYS, default='once a day', max_length=20)
     mailing_status = models.CharField(choices=STATUSES, default='created', max_length=20)
@@ -56,7 +60,6 @@ class Newsletter(models.Model):
 
     def __str__(self):
         return f'{self.posting_time}\n{self.frequency}\n{self.mailing_status}\n'
-
 
 class MessageToSend(models.Model):
     newsletter = models.OneToOneField(

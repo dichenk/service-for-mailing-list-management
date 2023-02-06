@@ -18,16 +18,32 @@ logger = logging.getLogger(__name__)
 
 
 def my_job():
-    send_a_message()
-    df = read_newsletter()
-    send_immediately = df[df[4] < datetime.date.today()]
-  #  send_today = df[df[4] == datetime.date.today()]
-    send_today = df[df[1] < datetime.datetime.now().time()]
+    def make_newsletter(data):
+        adding_periods = {'once a day': 1, 'once a week': 7, 'once a month': 30}
+        for i in data:
+            newsletter_id = data.iloc[i][0]
+            client_list_db = read_data_from_db('spammy_newsletter_client')
+            letter_list = read_data_from_db('spammy_messagetosend')
+            # to send
+            period = df[i][2] # set next date of emails sending
+            df[i][5] = datetime.date.today() + datetime.timedelta(days=adding_periods[period])
 
-    print(len(send_immediately))
-    print('pause 1')
-    print(len(send_today))
-    print('pause 2')
+
+
+
+
+
+    df = read_data_from_db('spammy_newsletter')
+    '''if the mailing date in the past: send letters and set next sending date'''
+    maillist_table = df[df[4] < datetime.date.today()]
+    if len(maillist_table):
+        make_newsletter(maillist_table)
+
+    '''if the mailing date is today ant the time is now: send letters and set next sending date'''
+    maillist_table = df[(df[4] == datetime.date.today()) and (df[1] <= datetime.datetime.now().time())]
+    if len(maillist_table):
+        make_newsletter(maillist_table)
+
 
 
 
@@ -85,32 +101,25 @@ class Command(BaseCommand):
             logger.info("Scheduler shut down successfully!")
 
 
-def send_a_message():
+def send_a_message(sub, mes, recip):
     send_mail(
-        subject='hello',
-        message='hello world',
+        subject=sub,
+        message=mes,
         from_email=settings.EMAIL_HOST_USER,
-        recipient_list=['ju2ll@ya.ru'],
+        recipient_list=recip, #['ju2ll@ya.ru'],
     )
 
-
-def read_newsletter():
+'''reading data from db'''
+def read_data_from_db(name_of_db):
     conn = psycopg2.connect(host='localhost', dbname='mailing', user='oleg', password='12345')
     try:
         with conn:
             with conn.cursor() as cur:
-                cur.execute('SELECT * FROM spammy_newsletter')
+                cur.execute(f'SELECT * FROM {name_of_db}')
                 info_from_db = cur.fetchall()
     finally:
         conn.close()
     return pd.DataFrame(info_from_db)
-
-
-def is_the_time_for_sending(tm):
-    tm = (tm.hour * 60 + tm.minute) * 60 + tm.second
-    tm_now = time.gmtime()
-    tm_now = (tm_now.tm_hour * 60 + tm_now.tm_min) * 60 + tm_now.tm_sec
-    return tm - tm_now <= 0
 
 
 

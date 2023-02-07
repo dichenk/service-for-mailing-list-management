@@ -32,7 +32,7 @@ class Newsletter(models.Model):
     STATUSES = (
         ('completed,', 'завершена'),
         ('created', 'создана'),
-        ('launched,', 'запущена'),
+        ('launched', 'запущена'),
     )
 
     client = models.ManyToManyField(

@@ -72,6 +72,4 @@ def change_status(request, pk):
     else:
         maillist_item.mailing_status = 'created'
     maillist_item.save()
-    check_myself()
-    #    send_a_message()
     return redirect(reverse_lazy('spammy:newsletter'))

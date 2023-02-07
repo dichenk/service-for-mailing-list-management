@@ -20,27 +20,35 @@ logger = logging.getLogger(__name__)
 def my_job():
     def make_newsletter(data):
         adding_periods = {'once a day': 1, 'once a week': 7, 'once a month': 30}
-        for i in data:
+        print(data)
+        for index, row in data.iterrows():
+            period = df.loc[index][2]  # set next date of emails sending
+            variable = datetime.date.today() + datetime.timedelta(days=adding_periods[period])
+            df.loc[index][4] = variable
+            '''
             newsletter_id = data.iloc[i][0]
             client_list_db = read_data_from_db('spammy_newsletter_client')
             letter_list = read_data_from_db('spammy_messagetosend')
             # to send
-            period = df[i][2] # set next date of emails sending
-            df[i][5] = datetime.date.today() + datetime.timedelta(days=adding_periods[period])
-
-
-
-
-
+            
+            
+            print(adding_periods)
+            print(period)
+            print(df)
+            
+            print(df)
+            '''
 
     df = read_data_from_db('spammy_newsletter')
     '''if the mailing date in the past: send letters and set next sending date'''
-    maillist_table = df[df[4] < datetime.date.today()]
+    maillist_table = df[(df[4] < datetime.date.today()) & (df[3] == 'launched')]
+#    print(f'amount of past dates: {len(maillist_table)}')
     if len(maillist_table):
         make_newsletter(maillist_table)
 
     '''if the mailing date is today ant the time is now: send letters and set next sending date'''
-    maillist_table = df[(df[4] == datetime.date.today()) and (df[1] <= datetime.datetime.now().time())]
+    maillist_table = df[(df[4] == datetime.date.today()) & (df[1] <= datetime.datetime.now().time()) & (df[3] == 'launched')]
+#    print(f'amount of today past maillists: {len(maillist_table)}')
     if len(maillist_table):
         make_newsletter(maillist_table)
 

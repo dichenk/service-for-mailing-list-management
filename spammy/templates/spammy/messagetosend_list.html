@@ -34,9 +34,8 @@
           <td>{{object.letter_subject}}</td>
           <td><p>{{object.body_of_the_letter|truncatechars:30}}</p></td>
           <td>
-		  <a>Подробнее</a> - 
 		  <a href='{% url 'spammy:update_mail' object.pk %}'>Редактировать</a> - 
-		  <a>Удалить</a>
+		  <a href='{% url 'spammy:delete_mail' object.pk %}'>Удалить</a>
 		  </td>
 
         </tr>

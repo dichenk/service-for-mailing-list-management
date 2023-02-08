@@ -34,9 +34,8 @@
           <td>{{object.mame}}</td>
           <td>{{object.comment|truncatechars:30}}</td>
           <td>
-		  <a>Подробнее</a> - 
 		  <a href='{% url 'spammy:update_client' object.pk %}'>Редактировать</a>  - 
-		  <a>Удалить</a> </td>
+		  <a href='{% url 'spammy:delete_client' object.pk %}'>Удалить</a></td>
 
         </tr>
 

@@ -43,9 +43,8 @@
 			{% endif %}
 		  </td>
           <td>
-		  <a>Подробнее</a> - 
 		  <a href='{% url 'spammy:update_newsletter' object.pk %}'>Редактировать</a> - 
-		  <a>Удалить</a>
+		  <a href='{% url 'spammy:delete_newsletter' object.pk %}'>Удалить</a>
 		  </td>
 
         </tr>

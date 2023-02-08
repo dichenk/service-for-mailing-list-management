@@ -1,10 +1,6 @@
-import psycopg2
-import pandas as pd
-from django.conf import settings
-from django.core.mail import send_mail
 from django.shortcuts import render, get_object_or_404, redirect
 from spammy.models import Client, Newsletter, MessageToSend, AttemptToSend
-from django.views.generic import ListView, CreateView, UpdateView
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 import time
 
@@ -73,3 +69,13 @@ def change_status(request, pk):
         maillist_item.mailing_status = 'created'
     maillist_item.save()
     return redirect(reverse_lazy('spammy:newsletter'))
+
+class ClientDeleteView(DeleteView):
+    model = Client
+    success_url = reverse_lazy('spammy:client')
+class NewsletterDeleteView(DeleteView):
+    model = Newsletter
+    success_url = reverse_lazy('spammy:newsletter')
+class MessageToSendDeleteView(DeleteView):
+    model = MessageToSend
+    success_url = reverse_lazy('spammy:mails')

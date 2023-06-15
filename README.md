@@ -1,4 +1,3 @@
-# kursach_23_02_01
 
 the task: to develop a service for mailing list management, administration and statistics.
 
